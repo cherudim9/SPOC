@@ -1,0 +1,4 @@
+file bin/kernel
+target remote :1234
+b lab1_switch_to_user
+continue
