@@ -15,6 +15,33 @@ RPL:说明的是进程对段访问的请求权限(Request Privilege Level)，是
 
 访问时的特权检查是判断：EPL=max(RPL,CPL)<=DPL是否成立
 
+##问题1 Challenge
+
+修改内核程序，获取RPL
+
+  int GETCPL() {
+    int ret;
+    asm volatile (
+       "movl %%cs, %0\n"
+       : "=r" (ret)
+    );
+    return ret;
+  }
+
+  void
+  kern_init(){
+    ...
+    cprintf("CPL=%d\n", GETCPL()&3);
+  }
+  
+输出为0.
+  
+修改用户程序，获取RPL。本小组选择了在`ls.c`中添加了输出语句（类似于上一程序）。得到结果如下：
+
+![](02-2-lab1-4.png)
+
+输出为3.
+
 ##问题2
 
 **问题**：比较不同特权级的中断切换时的堆栈变化差别；(challenge)写出一些简单的小程序（c or asm）来显示出不同特权级的的中断切换的堆栈变化情况。
