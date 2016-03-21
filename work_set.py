@@ -1,12 +1,5 @@
 import numpy
 
-def calc(lists):
-	res = []
-	for i in lists:
-		if not i in res:
-			res.append(i)
-	return res
-
 memory=[]
 window_size=4
 window=[]
